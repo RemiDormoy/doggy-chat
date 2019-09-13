@@ -15,8 +15,10 @@ const store = new Vuex.Store({
     addMessages(state, messages) {
       state.messages.addAll(messages);
     },
-    addMessage(state, message) {
-      state.messages.push(message);
+    addMessage(state, newMessage) {
+      if (state.messages.filter(message => message.id === newMessage.id).length === 0) {
+        state.messages.push(newMessage);
+      }
     },
   },
 

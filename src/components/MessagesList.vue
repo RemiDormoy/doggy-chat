@@ -1,11 +1,7 @@
 <template>
-  <div>
+  <div id="messageListScrollView">
     <div v-for="message in  messages" :key="message.id">
-
-      {{ message.id }}
-      -
-      {{ message.content }}
-
+        {{ message.content }}
     </div>
   </div>
 </template>
@@ -22,9 +18,18 @@ export default {
     refreshMessages();
   },
 
+  watch: {
+    messages() {
+      setTimeout(() => {
+        const objDiv = document.getElementById('messageListScrollView');
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }, 100);
+    },
+  },
+
   computed: {
     messages() {
-      return messagesStore.state.messages;
+      return messagesStore.state.messages.sort((a, b) => a.time - b.time);
     },
   },
 };

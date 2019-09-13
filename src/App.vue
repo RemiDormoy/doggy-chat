@@ -56,6 +56,7 @@ export default {
   .messageListContainer {
     height: 500px;
     width: 100vw;
+    overflow: scroll;
   }
 
   .endroitOuOnEcrit {

@@ -20,16 +20,18 @@ export function sendMessage(input) {
     id: docRef.id,
     content: input,
     sender: 'Je suis celui qui l\'a envoyé',
+    time: new Date().getTime(),
   });
 }
 
 export function refreshMessages() {
   const firestore = firebase.firestore();
-  firestore.collection('messages').get().then((querySnapshot) => {
+  firestore.collection('messages').onSnapshot((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       const message = {
         id: doc.id,
         content: doc.data().content,
+        time: doc.data().time,
       };
       store.commit('addMessage', message);
     });

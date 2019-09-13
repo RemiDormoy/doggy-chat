@@ -1,6 +1,6 @@
 <template>
   <div class="inputDoggyContainer">
-    <input v-model="message" class="inputDoggy">
+    <input v-model="message" class="inputDoggy" v-on:keyup.enter="sendMessagesToService">
     <div class="sendButton" @click="sendMessagesToService"></div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   methods: {
     sendMessagesToService() {
       sendMessage(this.message);
+      this.message = '';
     },
   },
 };
@@ -28,15 +29,20 @@ export default {
 <style>
   .inputDoggyContainer {
     display: inline;
+    width: 100vw;
   }
   .inputDoggy {
     height: 40px;
+    display: inline-block;
     background-color: #42b983;
     width: 80%;
+    right: 0;
   }
   .sendButton {
     height: 40px;
+    display: inline-block;
     background-color: brown;
-    width: 20%;
+    left: 0px;
+    width: 40px;
   }
 </style>
