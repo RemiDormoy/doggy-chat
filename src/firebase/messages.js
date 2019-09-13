@@ -13,6 +13,16 @@ export function getMessages() {
   });
 }
 
+export function sendMessage(input) {
+  const firestore = firebase.firestore();
+  const docRef = firestore.collection('messages').doc();
+  docRef.set({
+    id: docRef.id,
+    content: input,
+    sender: 'Je suis celui qui l\'a envoyé',
+  });
+}
+
 export function refreshMessages() {
   const firestore = firebase.firestore();
   firestore.collection('messages').get().then((querySnapshot) => {

@@ -1,28 +1,21 @@
 <template>
   <div id="app">
-    <HelloWorld v-if="page === 'home'" msg="Welcome to Your Vue.js App"/>
-    <HelloWorld v-if="page === 'click'" msg="C est bien tu sais cliquer gros"/>
-    <div @click="firebaseAdd">
-      Clique ici pour ajouter un truc
-    </div>
-    <div @click="logStuff">
-      Clique ici pour logger
-    </div>
     <MessagesList class="messageListContainer"/>
+    <EndroitOuOnEcrit class="endroitOuOnEcrit" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
 import MessagesList from './components/MessagesList.vue';
+import EndroitOuOnEcrit from './components/EndroitOuOnEcrit.vue';
 import store from './stores/navigation';
 import { getMessages } from './firebase/messages';
 
 export default {
   name: 'app',
   components: {
+    EndroitOuOnEcrit,
     MessagesList,
-    HelloWorld,
   },
 
   computed: {
@@ -60,8 +53,13 @@ export default {
     margin-top: 60px;
   }
 
-  #messageListContainer {
+  .messageListContainer {
     height: 500px;
     width: 100vw;
+  }
+
+  .endroitOuOnEcrit {
+    position: sticky;
+    top: 0;
   }
 </style>
