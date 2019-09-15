@@ -6,6 +6,7 @@ const store = new Vuex.Store({
   state: {
     currentPage: 'home',
     messages: [],
+    username: undefined,
   },
 
   mutations: {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
     },
     addMessages(state, messages) {
       state.messages.addAll(messages);
+    },
+    saveUsername(state, username) {
+      state.username = username;
     },
     addMessage(state, newMessage) {
       if (state.messages.filter(message => message.id === newMessage.id).length === 0) {

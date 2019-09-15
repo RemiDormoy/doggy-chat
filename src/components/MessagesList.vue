@@ -6,8 +6,13 @@
           {{ message.content }}
         </div>
       </div>
-      <div class="hourOfSending">
-        {{ formatDate(new Date(message.time))}}
+      <div class="messageInfoContainer">
+        <div class="senderInformation">
+          {{ message.sender }}
+        </div>
+        <div class="hourOfSending">
+          {{ formatDate(new Date(message.time))}}
+        </div>
       </div>
     </div>
   </div>
@@ -73,7 +78,19 @@ export default {
     background-color: beige;
   }
 
+  .messageInfoContainer {
+    left: 20px;
+    display: inline;
+  }
+
   .hourOfSending {
-    position: relative;
+    display: inline-block;
+    margin-left: 40px;
+    left: 0;
+  }
+
+  .senderInformation {
+    display: inline-block;
+    right: 0;
   }
 </style>

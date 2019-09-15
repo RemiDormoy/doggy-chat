@@ -19,7 +19,7 @@ export function sendMessage(input) {
   docRef.set({
     id: docRef.id,
     content: input,
-    sender: 'Je suis celui qui l\'a envoyé',
+    sender: store.state.username,
     time: new Date().toISOString(),
   });
 }
@@ -32,6 +32,7 @@ export function refreshMessages() {
         id: doc.id,
         content: doc.data().content,
         time: doc.data().time,
+        sender: doc.data().sender,
       };
       store.commit('addMessage', message);
     });
