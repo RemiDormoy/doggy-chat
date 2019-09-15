@@ -23,8 +23,10 @@ export default {
 
   methods: {
     sendMessagesToService() {
-      sendMessage(this.message);
-      this.message = '';
+      if (this.message.length > 0) {
+        sendMessage(this.message);
+        this.message = '';
+      }
     },
   },
 };
