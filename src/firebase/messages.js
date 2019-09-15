@@ -20,7 +20,7 @@ export function sendMessage(input) {
     id: docRef.id,
     content: input,
     sender: 'Je suis celui qui l\'a envoyé',
-    time: new Date().getTime(),
+    time: new Date().toISOString(),
   });
 }
 

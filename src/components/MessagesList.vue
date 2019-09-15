@@ -1,7 +1,14 @@
 <template>
   <div id="messageListScrollView">
     <div v-for="message in  messages" :key="message.id">
-        {{ message.content }}
+      <div class="messageContainer">
+        <div>
+          {{ message.content }}
+        </div>
+      </div>
+      <div class="hourOfSending">
+        {{ formatDate(new Date(message.time))}}
+      </div>
     </div>
   </div>
 </template>
@@ -27,14 +34,46 @@ export default {
     },
   },
 
+  methods: {
+    formatDate(date) {
+      let hours = date.getHours()
+        .toString();
+      let minutes = date.getMinutes()
+        .toString();
+      if (hours.length === 1) {
+        hours = `0${hours}`;
+      }
+      if (minutes.length === 1) {
+        minutes = `0${minutes}`;
+      }
+      return `${hours}:${minutes}`;
+    },
+  },
+
   computed: {
     messages() {
-      return messagesStore.state.messages.sort((a, b) => a.time - b.time);
+      // eslint-disable-next-line max-len
+      return messagesStore.state.messages;
     },
   },
 };
 </script>
 
 <style scoped>
+  .messageContainer {
+    position: relative;
+    width: 50vw;
+    left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: beige;
+  }
 
+  .hourOfSending {
+    position: relative;
+  }
 </style>

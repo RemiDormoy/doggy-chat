@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     addMessage(state, newMessage) {
       if (state.messages.filter(message => message.id === newMessage.id).length === 0) {
         state.messages.push(newMessage);
+        state.messages = state.messages.sort((a, b) => Date.parse(a.time) - Date.parse(b.time));
       }
     },
   },
