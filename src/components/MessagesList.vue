@@ -1,7 +1,7 @@
 <template>
   <div id="messageListScrollView">
     <div v-for="message in  messages" :key="message.id">
-      <div class="messageContainer">
+      <div class="messageContainer" :class="{'senderMessageContainer': isSender(message)}">
         <div>
           {{ message.content }}
         </div>
@@ -40,6 +40,10 @@ export default {
   },
 
   methods: {
+    isSender(message) {
+      return message.sender === this.username;
+    },
+
     formatDate(date) {
       let hours = date.getHours()
         .toString();
@@ -60,6 +64,10 @@ export default {
       // eslint-disable-next-line max-len
       return messagesStore.state.messages;
     },
+    username() {
+      // eslint-disable-next-line max-len
+      return messagesStore.state.username;
+    },
   },
 };
 </script>
@@ -76,6 +84,18 @@ export default {
     margin-bottom: 10px;
     border-radius: 5px;
     background-color: beige;
+  }
+  .senderMessageContainer {
+    position: relative;
+    width: 50vw;
+    left: 40vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: aquamarine;
   }
 
   .messageInfoContainer {
