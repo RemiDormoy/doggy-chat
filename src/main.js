@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase/app';
 import App from './App.vue';
+import './registerServiceWorker';
 
 
 Vue.use(Vuex);
@@ -17,6 +18,16 @@ const firebaseConfig = {
   appId: '1:237114950965:web:eb7a2e32df63c13132787c',
 };
 firebase.initializeApp(firebaseConfig);
+
+// eslint-disable-next-line no-unused-vars
+const messaging = firebase.messaging();
+
+messaging.onMessage((payload) => {
+  console.log('Message received. ', payload);
+  // [START_EXCLUDE]
+  // Update the UI to include the received message.
+  console.log(payload);
+});
 
 new Vue({
   render: h => h(App),

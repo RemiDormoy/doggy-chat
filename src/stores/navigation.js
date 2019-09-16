@@ -7,11 +7,15 @@ const store = new Vuex.Store({
     currentPage: 'home',
     messages: [],
     username: undefined,
+    token: undefined,
   },
 
   mutations: {
     saveNewPage(state, newPage) {
       state.currentPage = newPage;
+    },
+    addToken(state, token) {
+      state.token = token;
     },
     addMessages(state, messages) {
       state.messages.addAll(messages);
