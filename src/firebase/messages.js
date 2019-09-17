@@ -18,6 +18,7 @@ export function getMessages() {
 export function sendMessage(input) {
   const firestore = firebase.firestore();
   const { username } = store.state;
+  const donelist = [];
   const docRef = firestore.collection('messages')
     .doc();
   docRef.set({
@@ -34,21 +35,26 @@ export function sendMessage(input) {
       docs.forEach((doc) => {
         console.log(doc.data());
         const token = doc.data().userToken;
-        axios.post('https://fcm.googleapis.com/fcm/send',
-          {
-            notification: {
-              title: `${username} te parle sur doggy-chat`,
-              body: input,
-              click_action: 'https://doggy-chat.firebaseapp.com/',
+        if (donelist.includes(token)) {
+          // do nothing
+        } else {
+          donelist.push(token);
+          axios.post('https://fcm.googleapis.com/fcm/send',
+            {
+              notification: {
+                title: `${username} te parle sur doggy-chat`,
+                body: input,
+                click_action: 'https://doggy-chat.firebaseapp.com/',
+              },
+              to: token,
             },
-            to: token,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'key=AAAANzUnBTU:APA91bHVvpWqTt0SYwnx7wYwxT5a4jz32-FuR6OSx4UwhoaOQqROKC1qe1C8nGzNK7lK6Z3XygcaqizkhIh2UgHRggmoLL_6OCDc43nfmleQcgFL6Pp3WUJNvEcXRRb2eqHv1-T8P8mY',
-            },
-          });
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'key=AAAANzUnBTU:APA91bHVvpWqTt0SYwnx7wYwxT5a4jz32-FuR6OSx4UwhoaOQqROKC1qe1C8nGzNK7lK6Z3XygcaqizkhIh2UgHRggmoLL_6OCDc43nfmleQcgFL6Pp3WUJNvEcXRRb2eqHv1-T8P8mY',
+              },
+            });
+        }
       });
     });
   console.log('fin de la methode');
