@@ -50,21 +50,25 @@ export default {
       getMessages();
     },
     saveUsername() {
-      Notification.requestPermission()
-        .then((permission) => {
-          if (permission === 'granted') {
-            const messaging = firebase.messaging();
-            messaging.getToken()
-              .then((token) => {
-                console.log(`le token est : ${token}`);
-                store.commit('saveUsername', this.name);
-                store.commit('addToken', token);
-                addUser(token, this.name);
-              });
-          } else {
-            console.log('Unable to get permission to notify.');
-          }
-        });
+      if (firebase.messaging.isSupported()) {
+        Notification.requestPermission()
+          .then((permission) => {
+            if (permission === 'granted') {
+              const messaging = firebase.messaging();
+              messaging.getToken()
+                .then((token) => {
+                  console.log(`le token est : ${token}`);
+                  store.commit('saveUsername', this.name);
+                  store.commit('addToken', token);
+                  addUser(token, this.name);
+                });
+            } else {
+              console.log('Unable to get permission to notify.');
+            }
+          });
+      } else {
+        store.commit('saveUsername', this.name);
+      }
     },
     logStuff() {
       store.state.messages.foreach((message) => {

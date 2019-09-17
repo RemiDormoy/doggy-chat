@@ -20,14 +20,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // eslint-disable-next-line no-unused-vars
-const messaging = firebase.messaging();
+if (firebase.messaging.isSupported()) {
+  const messaging = firebase.messaging();
 
-messaging.onMessage((payload) => {
-  console.log('Message received. ', payload);
-  // [START_EXCLUDE]
-  // Update the UI to include the received message.
-  console.log(payload);
-});
+  messaging.onMessage((payload) => {
+    console.log('Message received. ', payload);
+    // [START_EXCLUDE]
+    // Update the UI to include the received message.
+    console.log(payload);
+  });
+}
 
 new Vue({
   render: h => h(App),
