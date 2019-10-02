@@ -2,7 +2,10 @@
   <div id="messageListScrollView">
     <div v-for="message in  messages" :key="message.id">
       <div class="messageContainer" :class="{'senderMessageContainer': isSender(message)}">
-        <div>
+        <div v-if="message.type === 'image'">
+          <img class="messageImage" :src="message.imageUrl">
+        </div>
+        <div v-else>
           {{ message.content }}
         </div>
       </div>
@@ -112,5 +115,9 @@ export default {
   .senderInformation {
     display: inline-block;
     right: 0;
+  }
+
+  .messageImage {
+    height: 120px;
   }
 </style>

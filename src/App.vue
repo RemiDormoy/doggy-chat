@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="username">
+    <div v-if="username" class="containerMessagesScreen">
       <MessagesList class="messageListContainer"/>
       <EndroitOuOnEcrit class="endroitOuOnEcrit"/>
     </div>
@@ -61,9 +61,14 @@ export default {
                   store.commit('saveUsername', this.name);
                   store.commit('addToken', token);
                   addUser(token, this.name);
+                })
+                .catch(() => {
+                  console.log('impossible de chopper un token');
+                  store.commit('saveUsername', this.name);
                 });
             } else {
               console.log('Unable to get permission to notify.');
+              store.commit('saveUsername', this.name);
             }
           });
       } else {
@@ -86,20 +91,25 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     position: relative;
-    height: 100vh;
+    height: 98vh;
     color: #2c3e50;
   }
 
   .messageListContainer {
-    width: 100vw;
-    height: 88vh;
+    width: 96vw;
+    height: 86vh;
     overflow: scroll;
   }
 
   .endroitOuOnEcrit {
     position: sticky;
     height: 12vh;
+    overflow: hidden;
     bottom: 0;
+  }
+
+  .containerMessagesScreen {
+    width: 98vw;
   }
 
   .usernameInupt {

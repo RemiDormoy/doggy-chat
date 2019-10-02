@@ -23,6 +23,7 @@ export function sendMessage(input) {
     .doc();
   docRef.set({
     id: docRef.id,
+    type: 'message',
     content: input,
     sender: username,
     time: new Date().toISOString(),
@@ -39,6 +40,7 @@ export function sendMessage(input) {
           // do nothing
         } else {
           donelist.push(token);
+          console.log('je suis juste avant un send')
           axios.post('https://fcm.googleapis.com/fcm/send',
             {
               notification: {
@@ -60,6 +62,20 @@ export function sendMessage(input) {
   console.log('fin de la methode');
 }
 
+export function sendImage(url) {
+  const firestore = firebase.firestore();
+  const { username } = store.state;
+  const docRef = firestore.collection('messages')
+    .doc();
+  docRef.set({
+    id: docRef.id,
+    type: 'image',
+    imageUrl: url,
+    sender: username,
+    time: new Date().toISOString(),
+  });
+}
+
 export function addUser(token, name) {
   const firestore = firebase.firestore();
   const docRef = firestore.collection('users')
@@ -77,6 +93,8 @@ export function refreshMessages() {
       querySnapshot.forEach((doc) => {
         const message = {
           id: doc.id,
+          type: doc.data().type,
+          imageUrl: doc.data().imageUrl,
           content: doc.data().content,
           time: doc.data().time,
           sender: doc.data().sender,

@@ -3,14 +3,24 @@
     <input v-model="message"
            class="inputDoggy"
            v-on:keyup.enter="sendMessagesToService" placeholder="Écrit un message ou boucle la">
-    <div class="sendButton" @click="sendMessagesToService">
-      <img src="https://image.flaticon.com/icons/svg/309/309456.svg">
+    <div v-if="showSend" class="sendButton" @click="onSendButtonClicked">
+      <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/309/309456.svg">
+    </div>
+    <div v-else class="sendButton" @click="takePicture">
+      <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/1373/1373265.svg">
+      <input
+        class="inputCamera"
+        ref="myImage" id="inputImage"
+        type="file"
+        accept="image/*;capture=camera"
+        @change="pictureTaken">
     </div>
   </div>
 </template>
 
 <script>
-import { sendMessage } from '../firebase/messages';
+import firebase from 'firebase';
+import { sendMessage, sendImage } from '../firebase/messages';
 
 export default {
   name: 'EndroitOuOnEcrit',
@@ -18,7 +28,19 @@ export default {
   data() {
     return {
       message: '',
+      showSend: false,
     };
+  },
+
+  watch: {
+    message(value) {
+      console.log(`la value vaut :${value}et elle a donc une longueur de :${value.length.toString()}`);
+      if (value.length > 0) {
+        this.showSend = true;
+      } else {
+        this.showSend = false;
+      }
+    },
   },
 
   methods: {
@@ -28,27 +50,55 @@ export default {
         this.message = '';
       }
     },
+
+    pictureTaken() {
+      const ref = firebase.storage().ref();
+      const path = `${new Date().toISOString()}yolo`;
+      const yolo = ref.child(path);
+      const message = this.$refs.myImage.files[0];
+      yolo.put(message).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          sendImage(downloadURL);
+          console.log('File available at', downloadURL);
+        });
+      });
+    },
+
+    onSendButtonClicked() {
+      if (this.message.length > 0) {
+        this.sendMessagesToService();
+      } else {
+        this.takePicture();
+      }
+    },
+
+    takePicture() {
+      console.log('yolo yolo yolo');
+      document.getElementById('inputImage').click();
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
   .inputDoggyContainer {
     display: inline;
-    width: 100vw;
+    width: 98vw;
   }
+
   .inputDoggy {
     position: relative;
     height: 40px;
     display: inline-block;
     border-radius: 40px;
     margin-right: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
     bottom: 15px;
     min-width: 60%;
     left: 0;
   }
+
   .sendButton {
     position: relative;
     height: 40px;
@@ -56,9 +106,22 @@ export default {
     background-color: white;
     padding: 10px;
     border-radius: 40px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     right: 0px;
     bottom: 0px;
     width: 40px;
   }
+
+  .sendButtonImage {
+    height: 40px;
+    width: 40px;
+  }
+
+  .inputCamera {
+    display: none;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+  }
+
 </style>
