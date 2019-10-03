@@ -3,7 +3,7 @@
     <input v-model="message"
            class="inputDoggy"
            v-on:keyup.enter="sendMessagesToService" placeholder="Écrit un message ou boucle la">
-    <div v-if="showSend" class="sendButton" @click="onSendButtonClicked">
+    <div v-if="showSend" class="sendButton" @click="onSendButtonClicked" ref="yoloButton">
       <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/309/309456.svg">
     </div>
     <div v-else class="sendButton" @click="takePicture">
@@ -20,6 +20,9 @@
 
 <script>
 import firebase from 'firebase';
+import {
+  TimelineLite, Back, Elastic, Expo,
+} from 'gsap';
 import { sendMessage, sendImage } from '../firebase/messages';
 
 export default {
@@ -70,6 +73,26 @@ export default {
       } else {
         this.takePicture();
       }
+      const bubble = this.$refs.yoloButton;
+      const timeline = new TimelineLite();
+      timeline.to(bubble, 0.5, {
+        scale: 0.8,
+        rotation: 16,
+        ease: Back.easeOut.config(1.7),
+      });
+      timeline.to(
+        bubble,
+        0.5,
+        {
+          scale: 0.9,
+          opacity: 1,
+        },
+        '-=0.6',
+      ).to(bubble, 1.2, {
+        scale: 1,
+        rotation: '-=16',
+        ease: Elastic.easeOut.config(2.5, 0.5),
+      });
     },
 
     takePicture() {
