@@ -40,7 +40,7 @@ export function sendMessage(input) {
           // do nothing
         } else {
           donelist.push(token);
-          console.log('je suis juste avant un send')
+          console.log('je suis juste avant un send');
           axios.post('https://fcm.googleapis.com/fcm/send',
             {
               notification: {

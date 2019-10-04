@@ -3,7 +3,7 @@
     <div v-for="message in  messages" :key="message.id">
       <div class="messageContainer" :class="{'senderMessageContainer': isSender(message)}">
         <div v-if="message.type === 'image'">
-          <img class="messageImage" :src="message.imageUrl">
+          <img class="messageImage" :src="message.imageUrl" @click="openImage(message.imageUrl)">
         </div>
         <div v-else>
           {{ message.content }}
@@ -45,6 +45,10 @@ export default {
   methods: {
     isSender(message) {
       return message.sender === this.username;
+    },
+
+    openImage(url) {
+      window.open(url);
     },
 
     formatDate(date) {
