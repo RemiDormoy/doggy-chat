@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueCookies from 'vue-cookies';
 import firebase from 'firebase/app';
 import App from './App.vue';
 import './registerServiceWorker';
@@ -30,6 +31,9 @@ if (firebase.messaging.isSupported()) {
     console.log(payload);
   });
 }
+
+Vue.use(VueCookies);
+VueCookies.config('30d');
 
 new Vue({
   render: h => h(App),

@@ -1,19 +1,24 @@
 <template>
-  <div class="inputDoggyContainer">
-    <input v-model="message"
-           class="inputDoggy"
-           v-on:keyup.enter="sendMessagesToService" placeholder="Écrit un message ou boucle la">
-    <div v-if="showSend" class="sendButton" @click="onSendButtonClicked" ref="yoloButton">
-      <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/309/309456.svg">
-    </div>
-    <div v-else class="sendButton" @click="takePicture">
-      <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/1373/1373265.svg">
-      <input
-        class="inputCamera"
-        ref="myImage" id="inputImage"
-        type="file"
-        accept="image/*;capture=camera"
-        @change="pictureTaken">
+  <div class="bottomWhiteBar">
+    <div class="inputDoggyContainer">
+      <div class="plusButton">
+        <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/391/391259.svg">
+      </div>
+      <input v-model="message"
+             class="inputDoggy"
+             v-on:keyup.enter="sendMessagesToService" placeholder="Écrit un message ou boucle la">
+      <div v-if="showSend" class="sendButton" @click="onSendButtonClicked" ref="yoloButton">
+        <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/309/309456.svg">
+      </div>
+      <div v-else class="sendButton" @click="takePicture">
+        <img class="sendButtonImage" src="https://image.flaticon.com/icons/svg/1373/1373265.svg">
+        <input
+          class="inputCamera"
+          ref="myImage" id="inputImage"
+          type="file"
+          accept="image/*;capture=camera"
+          @change="pictureTaken">
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +26,7 @@
 <script>
 import firebase from 'firebase';
 import {
-  TimelineLite, Back, Elastic, Expo,
+  TimelineLite, Back, Elastic,
 } from 'gsap';
 import { sendMessage, sendImage } from '../firebase/messages';
 
@@ -55,16 +60,19 @@ export default {
     },
 
     pictureTaken() {
-      const ref = firebase.storage().ref();
+      const ref = firebase.storage()
+        .ref();
       const path = `${new Date().toISOString()}yolo`;
       const yolo = ref.child(path);
       const message = this.$refs.myImage.files[0];
-      yolo.put(message).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((downloadURL) => {
-          sendImage(downloadURL);
-          console.log('File available at', downloadURL);
+      yolo.put(message)
+        .then((snapshot) => {
+          snapshot.ref.getDownloadURL()
+            .then((downloadURL) => {
+              sendImage(downloadURL);
+              console.log('File available at', downloadURL);
+            });
         });
-      });
     },
 
     onSendButtonClicked() {
@@ -88,16 +96,18 @@ export default {
           opacity: 1,
         },
         '-=0.6',
-      ).to(bubble, 1.2, {
-        scale: 1,
-        rotation: '-=16',
-        ease: Elastic.easeOut.config(2.5, 0.5),
-      });
+      )
+        .to(bubble, 1.2, {
+          scale: 1,
+          rotation: '-=16',
+          ease: Elastic.easeOut.config(2.5, 0.5),
+        });
     },
 
     takePicture() {
       console.log('yolo yolo yolo');
-      document.getElementById('inputImage').click();
+      document.getElementById('inputImage')
+        .click();
     },
   },
 };
@@ -106,38 +116,63 @@ export default {
 <style scoped>
   .inputDoggyContainer {
     display: inline;
-    width: 98vw;
+    border: 1px solid #cccc;
+    width: calc(100% - 20px);
+    position: fixed;
+    height: 45px;
+    margin-bottom: 10px;
+    left: 10px;
+    border-radius: 20px;
+  }
+
+  .bottomWhiteBar {
+    position: fixed;
+    margin-top: 10px;
+    width: 100vw;
+    background-color: white;
+    padding-top: 10px;
+    box-shadow: 4px 4px 8px 0 rgba(0.2, 0, 0, 0.2);
+    left: 0;
   }
 
   .inputDoggy {
     position: relative;
     height: 40px;
     display: inline-block;
-    border-radius: 40px;
     margin-right: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    border: 1px solid transparent;
+    padding-left: 20px;
+    margin-top: 15px;
+    border-radius: 8px;
     bottom: 15px;
-    min-width: 60%;
+    width: calc(100% - 120px);
     left: 0;
   }
 
   .sendButton {
     position: relative;
-    height: 40px;
+    height: 30px;
     display: inline-block;
-    background-color: white;
-    padding: 10px;
-    border-radius: 40px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     right: 0px;
-    bottom: 0px;
-    width: 40px;
+    margin-right: 10px;
+    top: -5px;
+    width: 30px;
+  }
+
+  .plusButton {
+    position: relative;
+    height: 30px;
+    display: inline-block;
+    margin-left: 10px;
+    right: 0px;
+    top: -5px;
+    width: 30px;
   }
 
   .sendButtonImage {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
 
   .inputCamera {

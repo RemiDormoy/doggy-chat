@@ -1,11 +1,11 @@
 <template>
-  <div id="messageListScrollView">
+  <div id="messageListScrollView" >
     <div v-for="message in  messages" :key="message.id">
       <div class="messageContainer" :class="{'senderMessageContainer': isSender(message)}">
         <div v-if="message.type === 'image'">
           <img class="messageImage" :src="message.imageUrl" @click="openImage(message.imageUrl)">
         </div>
-        <div v-else>
+        <div v-else class="messageContent">
           {{ message.content }}
         </div>
       </div>
@@ -17,6 +17,12 @@
           {{ formatDate(new Date(message.time))}}
         </div>
       </div>
+    </div>
+    <div class="profileButton" @click="yoloYoloYolo">
+      <img class="messageImageYolo" src="https://www.flaticon.com/premium-icon/icons/svg/1913/1913761.svg" @click="openImage(message.imageUrl)">
+    </div>
+    <div class="fakeMargin">
+
     </div>
   </div>
 </template>
@@ -49,6 +55,10 @@ export default {
 
     openImage(url) {
       window.open(url);
+    },
+
+    yoloYoloYolo() {
+      messagesStore.commit('saveUsername', undefined);
     },
 
     formatDate(date) {
@@ -84,24 +94,20 @@ export default {
     position: relative;
     width: 50vw;
     left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 20px 20px 20px 0;
     background-color: beige;
   }
   .senderMessageContainer {
     position: relative;
     width: 50vw;
     left: 40vw;
-    padding-top: 10px;
-    padding-bottom: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 20px 20px 0 20px;
     background-color: aquamarine;
   }
 
@@ -123,5 +129,25 @@ export default {
 
   .messageImage {
     height: 120px;
+    margin-top: 10px;
+  }
+
+  .messageContent {
+    padding: 10px;
+  }
+
+  .messageImageYolo {
+    height: 60px;
+  }
+
+  .fakeMargin {
+    height: 10px;
+  }
+
+  .profileButton {
+    position: fixed;
+    margin: 10px;
+    top: 0;
+    right: 0;
   }
 </style>

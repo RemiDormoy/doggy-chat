@@ -47,6 +47,12 @@ export default {
 
   mounted() {
     document.body.className = 'homeBOdy';
+
+    const yolo = this.$cookies.get('yolo-doggy-name');
+    console.log(yolo);
+    if (yolo) {
+      store.commit('saveUsername', yolo);
+    }
   },
 
   methods: {
@@ -65,6 +71,7 @@ export default {
                   store.commit('saveUsername', this.name);
                   store.commit('addToken', token);
                   addUser(token, this.name);
+                  this.$cookies.set('yolo-doggy-name', this.name);
                 })
                 .catch(() => {
                   console.log('impossible de chopper un token');
@@ -108,7 +115,7 @@ export default {
 
   .endroitOuOnEcrit {
     position: sticky;
-    height: 12vh;
+    height: 10vh;
     overflow: hidden;
     bottom: 0;
   }
