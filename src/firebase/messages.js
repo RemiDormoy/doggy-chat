@@ -46,7 +46,7 @@ export function sendMessage(input) {
               notification: {
                 title: `${username} te parle sur doggy-chat`,
                 body: input,
-                click_action: 'https://doggy-chat.firebaseapp.com/',
+                click_action: 'https://doggy-chat.firebaseapp.com/overview',
               },
               to: token,
             },
