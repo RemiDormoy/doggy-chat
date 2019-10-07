@@ -131,7 +131,7 @@ export default {
     width: 100vw;
     background-color: white;
     padding-top: 10px;
-    box-shadow: 4px 4px 8px 0 rgba(0.2, 0, 0, 0.2);
+    box-shadow: -4px 8px 8px 0 rgba(0.2, 0, 0, 0.2);
     left: 0;
   }
 
@@ -143,6 +143,9 @@ export default {
     overflow: hidden;
     border: 1px solid transparent;
     padding-left: 20px;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-focus-ring-color: none 0px !important;
+    outline: none !important;
     margin-top: 15px;
     border-radius: 8px;
     bottom: 15px;
