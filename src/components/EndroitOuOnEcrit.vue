@@ -131,7 +131,7 @@ export default {
     width: 100vw;
     background-color: white;
     padding-top: 10px;
-    box-shadow: -4px 8px 8px 0 rgba(0.2, 0, 0, 0.2);
+    box-shadow: 0px -4px 4px -4px rgba(0, 0, 0, 0.2);
     left: 0;
   }
 

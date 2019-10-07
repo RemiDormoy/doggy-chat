@@ -18,11 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="profileButton" @click="yoloYoloYolo">
-      <img class="messageImageYolo" src="https://www.flaticon.com/premium-icon/icons/svg/1913/1913761.svg" @click="openImage(message.imageUrl)">
-    </div>
     <div class="fakeMargin">
-
     </div>
   </div>
 </template>
@@ -55,10 +51,6 @@ export default {
 
     openImage(url) {
       window.open(url);
-    },
-
-    yoloYoloYolo() {
-      messagesStore.commit('saveUsername', undefined);
     },
 
     formatDate(date) {
@@ -136,18 +128,8 @@ export default {
     padding: 10px;
   }
 
-  .messageImageYolo {
-    height: 60px;
-  }
-
   .fakeMargin {
     height: 10px;
   }
 
-  .profileButton {
-    position: fixed;
-    margin: 10px;
-    top: 0;
-    right: 0;
-  }
 </style>

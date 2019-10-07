@@ -1,5 +1,11 @@
 <template>
   <div id="app" class="appMan">
+    <div v-if="username" class="toolbarDoggy">
+      <img class="messageImageYoloPetite" src="https://image.flaticon.com/icons/svg/271/271220.svg">
+      <img class="imagecenterTitle"
+           src="https://firebasestorage.googleapis.com/v0/b/doggy-chat.appspot.com/o/doggy-logo.svg?alt=media&token=c988cddd-a199-47fd-8f02-cc0ddfebb911"
+           @click="yoloYoloYolo">
+    </div>
     <div v-if="username" class="containerMessagesScreen">
       <MessagesList class="messageListContainer"/>
       <EndroitOuOnEcrit class="endroitOuOnEcrit"/>
@@ -59,6 +65,11 @@ export default {
     firebaseAdd() {
       getMessages();
     },
+
+    yoloYoloYolo() {
+      store.commit('saveUsername', undefined);
+    },
+
     saveUsername() {
       if (firebase.messaging.isSupported()) {
         Notification.requestPermission()
@@ -109,7 +120,8 @@ export default {
 
   .messageListContainer {
     width: 96vw;
-    height: 86vh;
+    height: calc(89vh - 70px);
+    margin-top: 50px;
     overflow: scroll;
   }
 
@@ -121,7 +133,6 @@ export default {
   }
 
   .containerMessagesScreen {
-    width: 98vw;
     overflow: hidden;
     height: 98vh;
   }
@@ -131,9 +142,10 @@ export default {
   }
 
   .usernameInupt {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0px -4px 4px -4px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     font-size: large;
+    z-index: 100;
   }
 
   .homeBOdy {
@@ -141,7 +153,44 @@ export default {
     margin: 0px;
     width: 100vw;
     height: 100vh;
-    background-color: #00b7ff;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='450' viewBox='0 0 1080 900'%3E%3Cg fill-opacity='.1'%3E%3Cpolygon fill='%23444' points='90 150 0 300 180 300'/%3E%3Cpolygon points='90 150 180 0 0 0'/%3E%3Cpolygon fill='%23AAA' points='270 150 360 0 180 0'/%3E%3Cpolygon fill='%23DDD' points='450 150 360 300 540 300'/%3E%3Cpolygon fill='%23999' points='450 150 540 0 360 0'/%3E%3Cpolygon points='630 150 540 300 720 300'/%3E%3Cpolygon fill='%23DDD' points='630 150 720 0 540 0'/%3E%3Cpolygon fill='%23444' points='810 150 720 300 900 300'/%3E%3Cpolygon fill='%23FFF' points='810 150 900 0 720 0'/%3E%3Cpolygon fill='%23DDD' points='990 150 900 300 1080 300'/%3E%3Cpolygon fill='%23444' points='990 150 1080 0 900 0'/%3E%3Cpolygon fill='%23DDD' points='90 450 0 600 180 600'/%3E%3Cpolygon points='90 450 180 300 0 300'/%3E%3Cpolygon fill='%23666' points='270 450 180 600 360 600'/%3E%3Cpolygon fill='%23AAA' points='270 450 360 300 180 300'/%3E%3Cpolygon fill='%23DDD' points='450 450 360 600 540 600'/%3E%3Cpolygon fill='%23999' points='450 450 540 300 360 300'/%3E%3Cpolygon fill='%23999' points='630 450 540 600 720 600'/%3E%3Cpolygon fill='%23FFF' points='630 450 720 300 540 300'/%3E%3Cpolygon points='810 450 720 600 900 600'/%3E%3Cpolygon fill='%23DDD' points='810 450 900 300 720 300'/%3E%3Cpolygon fill='%23AAA' points='990 450 900 600 1080 600'/%3E%3Cpolygon fill='%23444' points='990 450 1080 300 900 300'/%3E%3Cpolygon fill='%23222' points='90 750 0 900 180 900'/%3E%3Cpolygon points='270 750 180 900 360 900'/%3E%3Cpolygon fill='%23DDD' points='270 750 360 600 180 600'/%3E%3Cpolygon points='450 750 540 600 360 600'/%3E%3Cpolygon points='630 750 540 900 720 900'/%3E%3Cpolygon fill='%23444' points='630 750 720 600 540 600'/%3E%3Cpolygon fill='%23AAA' points='810 750 720 900 900 900'/%3E%3Cpolygon fill='%23666' points='810 750 900 600 720 600'/%3E%3Cpolygon fill='%23999' points='990 750 900 900 1080 900'/%3E%3Cpolygon fill='%23999' points='180 0 90 150 270 150'/%3E%3Cpolygon fill='%23444' points='360 0 270 150 450 150'/%3E%3Cpolygon fill='%23FFF' points='540 0 450 150 630 150'/%3E%3Cpolygon points='900 0 810 150 990 150'/%3E%3Cpolygon fill='%23222' points='0 300 -90 450 90 450'/%3E%3Cpolygon fill='%23FFF' points='0 300 90 150 -90 150'/%3E%3Cpolygon fill='%23FFF' points='180 300 90 450 270 450'/%3E%3Cpolygon fill='%23666' points='180 300 270 150 90 150'/%3E%3Cpolygon fill='%23222' points='360 300 270 450 450 450'/%3E%3Cpolygon fill='%23FFF' points='360 300 450 150 270 150'/%3E%3Cpolygon fill='%23444' points='540 300 450 450 630 450'/%3E%3Cpolygon fill='%23222' points='540 300 630 150 450 150'/%3E%3Cpolygon fill='%23AAA' points='720 300 630 450 810 450'/%3E%3Cpolygon fill='%23666' points='720 300 810 150 630 150'/%3E%3Cpolygon fill='%23FFF' points='900 300 810 450 990 450'/%3E%3Cpolygon fill='%23999' points='900 300 990 150 810 150'/%3E%3Cpolygon points='0 600 -90 750 90 750'/%3E%3Cpolygon fill='%23666' points='0 600 90 450 -90 450'/%3E%3Cpolygon fill='%23AAA' points='180 600 90 750 270 750'/%3E%3Cpolygon fill='%23444' points='180 600 270 450 90 450'/%3E%3Cpolygon fill='%23444' points='360 600 270 750 450 750'/%3E%3Cpolygon fill='%23999' points='360 600 450 450 270 450'/%3E%3Cpolygon fill='%23666' points='540 600 630 450 450 450'/%3E%3Cpolygon fill='%23222' points='720 600 630 750 810 750'/%3E%3Cpolygon fill='%23FFF' points='900 600 810 750 990 750'/%3E%3Cpolygon fill='%23222' points='900 600 990 450 810 450'/%3E%3Cpolygon fill='%23DDD' points='0 900 90 750 -90 750'/%3E%3Cpolygon fill='%23444' points='180 900 270 750 90 750'/%3E%3Cpolygon fill='%23FFF' points='360 900 450 750 270 750'/%3E%3Cpolygon fill='%23AAA' points='540 900 630 750 450 750'/%3E%3Cpolygon fill='%23FFF' points='720 900 810 750 630 750'/%3E%3Cpolygon fill='%23222' points='900 900 990 750 810 750'/%3E%3Cpolygon fill='%23222' points='1080 300 990 450 1170 450'/%3E%3Cpolygon fill='%23FFF' points='1080 300 1170 150 990 150'/%3E%3Cpolygon points='1080 600 990 750 1170 750'/%3E%3Cpolygon fill='%23666' points='1080 600 1170 450 990 450'/%3E%3Cpolygon fill='%23DDD' points='1080 900 1170 750 990 750'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/doggy-chat.appspot.com/o/group%20(1).svg?alt=media&token=8d91d28f-8b03-48b1-ab21-87cd05c76f17");
+  }
+
+  .toolbarDoggy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 10;
+    display: inline-block;
+    box-shadow: 4px 4px 8px 0 rgba(0.2, 0, 0, 0.2);
+    background-color: white;
+    height: 60px;
+  }
+
+  .messageImageYolo {
+    height: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
+  .titleDoggy {
+    display: inline-block;
+    width: calc(100% - 100px);
+    margin-top: -20px;
+    height: 40px;
+  }
+
+  .messageImageYoloPetite {
+    position: fixed;
+    left: 20px;
+    height: 20px;
+    top: 20px;
+  }
+
+  .imagecenterTitle {
+    height: 40px;
+    margin-top: 10px;
+    width: calc(100% - 120px);
   }
 </style>
