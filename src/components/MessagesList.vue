@@ -89,8 +89,9 @@ export default {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     margin-bottom: 10px;
+    color: white;
     border-radius: 20px 20px 20px 0;
-    background-color: beige;
+    background-color: #1ebc85;
   }
   .senderMessageContainer {
     position: relative;
@@ -100,7 +101,8 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 20px 20px 0 20px;
-    background-color: aquamarine;
+    background-color: #2955b2;
+    color: white;
   }
 
   .messageInfoContainer {
